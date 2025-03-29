@@ -40,7 +40,7 @@
 
 ```bash
 # 1. Клонируйте репозиторий
-git clone https://github.com/ваш-репозиторий/detailing-center.git](https://github.com/belonogo/detailing-center.git
+git clone https://github.com/belonogo/detailing-center.git
 cd detailing-center
 
 # 2. Запустите сервисы
