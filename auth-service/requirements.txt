@@ -1,6 +1,6 @@
 flask==2.0.3
 flask-sqlalchemy==2.5.1
-sqlalchemy==1.4.46
+sqlalchemy==1.4.48  # Конкретно эта версия работает с flask-sqlalchemy 2.5.1
 flask-jwt-extended==4.4.0
 werkzeug==2.0.3
 psycopg2-binary==2.9.3
