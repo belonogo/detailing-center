@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend/build:/usr/share/nginx/html
+    depends_on:
+      - app1
+      - app2
+      - auth
+    restart: always
+
+  app1:
+    build: ./app_service
+    environment:
+      - FLASK_ENV=production
+      - DATABASE_URL=postgresql://postgres:postgres@db/detailing
+    depends_on:
+      - db
+    restart: always
+
+  app2:
+    build: ./app_service
+    environment:
+      - FLASK_ENV=production
+      - DATABASE_URL=postgresql://postgres:postgres@db/detailing
+    depends_on:
+      - db
+    restart: always
+
+  auth:
+    build: ./auth_service
+    environment:
+      - FLASK_ENV=production
+      - DATABASE_URL=postgresql://postgres:postgres@db/detailing
+      - JWT_SECRET_KEY=your_super_secret_key
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=detailing
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+
+volumes:
+  postgres_data:
